@@ -1,10 +1,8 @@
-package org.example;
+package org.example.schermate;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.example.utils.Utils;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Home  extends JFrame{
     private JButton inventarioButton;
@@ -16,9 +14,9 @@ public class Home  extends JFrame{
 
         Utils.setPositionAndDimensions(xCord,ycord,Home.this,home);
 
-        inventarioButton.addActionListener(e -> Utils.navigate(Home.this,home, Inventario.class));
+        inventarioButton.addActionListener(e -> Utils.navigate(Home.this,home, InventarioPage.class));
         tesseratiButton.addActionListener(e -> Utils.navigate(Home.this,home, TesseratiPage.class));
-        nuovaSomministrazioneButton.addActionListener(e -> Utils.navigate(Home.this,home, Somministrazione.class));
+        nuovaSomministrazioneButton.addActionListener(e -> Utils.navigate(Home.this,home, SomministrazionePage.class));
     }
 
     private void initialize(){

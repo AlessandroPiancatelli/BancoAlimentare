@@ -1,9 +1,13 @@
-package org.example;
+package org.example.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang3.tuple.Pair;
+import org.example.entita.Alimento;
+import org.example.entita.Tesserati;
+import org.example.tables.TableAlimento;
+import org.example.tables.TableTesserati;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -53,18 +57,13 @@ public class Utils  {
         }
     }
 
-    public static <T> List<T> readJsonToList(String filePath, TypeReference<List<T>> typeReference) throws IOException {
+    public static <T> List<T> readJsonToListAdvanced(String filePath, Class<T> generic) {
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
-            // Deserializza il file JSON nella lista di oggetti
-            List<T> myList = objectMapper.readValue(new File(filePath), typeReference);
-
-            return myList;
+            return objectMapper.readValue(new File(filePath), objectMapper.getTypeFactory().constructCollectionType(List.class,generic));
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Errore durante la lettura del file JSON: " + e.getMessage());
-            throw e; // Rilancia l'eccezione per gestirla in un livello superiore, se necessario
+            return null;
         }
     }
     public static List<Alimento> removeFromTableIfPresent(JTable table){
@@ -160,27 +159,13 @@ public class Utils  {
     }
 
     public static void uploadTableAlimento(String fileName , JTable table){
-        TypeReference<List<Alimento>> alimentoType = new TypeReference<>() {};
-
-        TableAlimento tableAlimento;
-        try {
-            tableAlimento = new TableAlimento(Utils.readJsonToList("doNotDelete/"+fileName+".json",alimentoType));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        TableAlimento tableAlimento = new TableAlimento(Utils.readJsonToListAdvanced("doNotDelete/"+fileName+".json", Alimento.class));
         table.setModel(tableAlimento);
         Utils.setTableAlignment(table);
     }
 
     public static void uploadTableTesserati(String fileName , JTable table){
-        TypeReference<List<Tesserati>> alimentoType = new TypeReference<>() {};
-
-        TableTesserati tableTesserati;
-        try {
-            tableTesserati = new TableTesserati(Utils.readJsonToList("doNotDelete/"+fileName+".json",alimentoType));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        TableTesserati   tableTesserati = new TableTesserati(Utils.readJsonToListAdvanced("doNotDelete/"+fileName+".json",Tesserati.class));
         table.setModel(tableTesserati);
         Utils.setTableAlignment(table);
     }

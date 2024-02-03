@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entita;
 
 public class Alimento {
     private Long id;

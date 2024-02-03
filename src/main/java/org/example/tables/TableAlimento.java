@@ -1,4 +1,6 @@
-package org.example;
+package org.example.tables;
+
+import org.example.entita.Alimento;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;

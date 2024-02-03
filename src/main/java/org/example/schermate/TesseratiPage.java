@@ -1,15 +1,15 @@
-package org.example;
+package org.example.schermate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import org.example.entita.Tesserati;
+import org.example.tables.TableTesserati;
+import org.example.utils.Utils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.Utils.readJsonToList;
+import static org.example.utils.Utils.readJsonToListAdvanced;
 
 public class TesseratiPage extends JFrame{
     private JTable table1;
@@ -54,7 +54,7 @@ public class TesseratiPage extends JFrame{
             return;
         }
 
-        Tesserati tesserato = new Tesserati(name,id);
+        org.example.entita.Tesserati tesserato = new Tesserati(name,id);
         List<Tesserati> tesseratiList = tableTesserati.getTesseratiList();
         tesseratiList.add(tesserato);
         TableTesserati newTable = new TableTesserati(tesseratiList);
@@ -64,15 +64,7 @@ public class TesseratiPage extends JFrame{
     }
 
     private void uploadTable(){
-        TypeReference<List<Tesserati>> alimentoType = new TypeReference<>() {};
-        List<Tesserati> alimenti = new ArrayList<>();
-        try {
-            alimenti = readJsonToList("doNotDelete/tesserati.json", alimentoType);
-            System.out.println(alimenti);
-        } catch (IOException e) {
-            // Gestisci l'eccezione
-            e.printStackTrace();
-        }
+        List<Tesserati> alimenti = readJsonToListAdvanced("doNotDelete/tesserati.json", org.example.entita.Tesserati.class);
         TableTesserati tableAlimento = new TableTesserati(alimenti);
         table1.setModel(tableAlimento);
         Utils.setTableAlignment(table1);

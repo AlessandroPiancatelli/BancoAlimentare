@@ -1,15 +1,15 @@
-package org.example;
+package org.example.schermate;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import org.example.entita.Alimento;
+import org.example.tables.TableAlimento;
+import org.example.utils.Utils;
 
-import static org.example.Utils.readJsonToList;
+import static org.example.utils.Utils.readJsonToListAdvanced;
 
-public class Inventario extends JFrame{
+public class InventarioPage extends JFrame{
     private JTable table1;
     private JPanel inventario;
     private JButton aggiungiButton;
@@ -18,12 +18,12 @@ public class Inventario extends JFrame{
     private JButton cancellaButton;
     private JButton indietroButton;
 
-    public Inventario(Integer xCord, Integer ycord) {
-        Utils.setPositionAndDimensions(xCord,ycord,Inventario.this,inventario);
+    public InventarioPage(Integer xCord, Integer ycord) {
+        Utils.setPositionAndDimensions(xCord,ycord, InventarioPage.this,inventario);
         Utils.uploadTableAlimento("alimenti",table1);
         aggiungiButton.addActionListener(e -> addItem());
         cancellaButton.addActionListener(e -> delete());
-        indietroButton.addActionListener(e -> Utils.navigate(Inventario.this,inventario, Home.class));
+        indietroButton.addActionListener(e -> Utils.navigate(InventarioPage.this,inventario, Home.class));
     }
 
     public void addItem(){
@@ -51,15 +51,7 @@ public class Inventario extends JFrame{
     }
 
     private void uploadTable(){
-        TypeReference<List<Alimento>> alimentoType = new TypeReference<>() {};
-        List<Alimento> alimenti = new ArrayList<>();
-        try {
-            alimenti = readJsonToList("alimenti.json", alimentoType);
-            System.out.println(alimenti);
-        } catch (IOException e) {
-            // Gestisci l'eccezione
-            e.printStackTrace();
-        }
+        List<Alimento> alimenti = readJsonToListAdvanced("alimenti.json", Alimento.class);
         TableAlimento tableAlimento = new TableAlimento(alimenti);
         table1.setModel(tableAlimento);
         Utils.setTableAlignment(table1);

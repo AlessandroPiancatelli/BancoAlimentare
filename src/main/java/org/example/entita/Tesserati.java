@@ -1,4 +1,4 @@
-package org.example;
+package org.example.entita;
 
 public class Tesserati {
     private String nome;
@@ -27,5 +27,10 @@ public class Tesserati {
 
     public Tesserati(){
 
+    }
+
+    @Override
+    public String toString() {
+        return String.format("nome: %s, codice: %s",nome,codice);
     }
 }
