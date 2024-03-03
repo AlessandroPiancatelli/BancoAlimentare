@@ -1,15 +1,25 @@
 package org.example.entita;
 
 public class Alimento {
-    private Long id;
+    private String id;
 
     private String nome;
 
-    public Long getId() {
+    private Long quantita;
+
+    public Long getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(Long quantita) {
+        this.quantita = quantita;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -21,9 +31,10 @@ public class Alimento {
         this.nome = nome;
     }
 
-    public Alimento(Long id, String nome) {
+    public Alimento(String id, String nome, Long quantita) {
         this.id = id;
         this.nome = nome;
+        this.quantita = quantita;
     }
 
     public Alimento() {

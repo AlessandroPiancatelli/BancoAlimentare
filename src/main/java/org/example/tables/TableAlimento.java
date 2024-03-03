@@ -29,7 +29,7 @@ public class TableAlimento implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -39,6 +39,8 @@ public class TableAlimento implements TableModel {
                 return "codice";
             case 1:
                 return "nome";
+            case 2:
+                return "quantità";
             default:
                 return "";
         }
@@ -48,6 +50,8 @@ public class TableAlimento implements TableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex){
             case 0:
+                return String.class;
+            case 2:
                 return Long.class;
             case 1:
                 return String.class;
@@ -69,6 +73,8 @@ public class TableAlimento implements TableModel {
                return alimento.getId();
            case 1:
                return alimento.getNome();
+           case 2:
+               return alimento.getQuantita();
            default:
                return "placeholder";
        }

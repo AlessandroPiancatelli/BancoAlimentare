@@ -78,7 +78,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="38904" class="javax.swing.JTable" binding="table2" default-binding="true">
+          <component id="38904" class="javax.swing.JTable" binding="tableAlimentiSomministrati">
             <constraints/>
             <properties/>
           </component>

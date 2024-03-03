@@ -9,6 +9,7 @@ import org.example.utils.Utils;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SomministrazionePage extends JFrame{
 
@@ -19,12 +20,13 @@ public class SomministrazionePage extends JFrame{
     private JTable tableAlimenti;
     private JButton button1;
     private JButton button2;
-    private JTable table2;
+    private JTable tableAlimentiSomministrati;
 
     public SomministrazionePage(Integer xCord, Integer ycord ){
         Utils.setPositionAndDimensions(xCord,ycord, SomministrazionePage.this,somministrazionePanel);
         initializeComboBox();
         initializeAlimenti();
+        initializeAlimentiSomministrati();
         tornaAllaHomeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,5 +41,10 @@ public class SomministrazionePage extends JFrame{
 
     private void initializeAlimenti(){
         tableAlimenti.setModel(new TableAlimento(Utils.readJsonToListAdvanced("doNotDelete/alimenti.json", Alimento.class)));
+        Utils.setTableAlignment(tableAlimenti);
+    }
+
+    private void initializeAlimentiSomministrati(){
+        tableAlimentiSomministrati.setModel(new TableAlimento(new ArrayList<>()));
     }
 }

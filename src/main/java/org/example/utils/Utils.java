@@ -12,23 +12,34 @@ import org.example.tables.TableTesserati;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Utils  {
 
     public static void setTableAlignment( JTable table1){
-        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
-        leftRenderer.setHorizontalAlignment( JLabel.LEFT );
-        table1.getColumnModel().getColumn(0).setCellRenderer(leftRenderer );
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+
+        for(int i = 0 ; i<table1.getColumnCount(); i++)
+        {
+            table1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer );
+        }
+
 
         JTableHeader header = table1.getTableHeader();
 
         if (header != null) {
             header.setResizingAllowed(true); // Opzionale: abilita il ridimensionamento delle colonne
             header.setReorderingAllowed(true); // Opzionale: abilita il riordinamento delle colonne
+            header.setFont(new Font("Tahoma",Font.BOLD,20));
             header.setVisible(true);
         }
     }
@@ -69,9 +80,16 @@ public class Utils  {
     public static List<Alimento> removeFromTableIfPresent(JTable table){
         TableAlimento model = (TableAlimento) table.getModel();
         List<Alimento> list = model.getAlimentoList();
-        int index = table.getSelectedRow();
+
+        int[] indexs = table.getSelectedRows();
+        Arrays.sort(indexs);
+        invertArray(indexs);
+
+
         if(checkIfSelectedIsPresent(table)){
-            list.remove(index);
+            for(int index : indexs){
+                list.remove(index);
+            }
             return list;
         }else{
             return list;
@@ -170,5 +188,20 @@ public class Utils  {
         Utils.setTableAlignment(table);
     }
 
+    public static void invertArray(int[] array) {
+        int start = 0;
+        int end = array.length - 1;
+
+        while (start < end) {
+            // Swap elements at start and end indices
+            int temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+
+            // Move start index forward and end index backward
+            start++;
+            end--;
+        }
+    }
 
 }

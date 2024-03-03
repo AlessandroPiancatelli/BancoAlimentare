@@ -17,6 +17,7 @@ public class InventarioPage extends JFrame{
     private JTextField textField2;
     private JButton cancellaButton;
     private JButton indietroButton;
+    private JTextField textField3;
 
     public InventarioPage(Integer xCord, Integer ycord) {
         Utils.setPositionAndDimensions(xCord,ycord, InventarioPage.this,inventario);
@@ -28,11 +29,11 @@ public class InventarioPage extends JFrame{
 
     public void addItem(){
        TableAlimento tableAlimento = (TableAlimento) this.table1.getModel();
-       Long id;
-       try{
-           id = Long.valueOf(this.textField1.getText());
-       } catch (Exception e){
-           JOptionPane.showMessageDialog(null,"Campo Id non valido");
+        String id;
+
+       id = this.textField1.getText();
+       if(id.isBlank()){
+           JOptionPane.showMessageDialog(null,"Campo nome non valido");
            return;
        }
        String name = this.textField2.getText();
@@ -40,8 +41,15 @@ public class InventarioPage extends JFrame{
            JOptionPane.showMessageDialog(null,"Campo nome non valido");
            return;
        }
+        Long quantita;
+        try{
+            quantita = Long.valueOf(this.textField3.getText());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null,"Campo Quantità non valido");
+            return;
+        }
 
-       Alimento alimento = new Alimento(id,name);
+       Alimento alimento = new Alimento(id,name,quantita);
        List<Alimento> alimentoList = tableAlimento.getAlimentoList();
        alimentoList.add(alimento);
        TableAlimento newTable = new TableAlimento(alimentoList);
@@ -51,7 +59,7 @@ public class InventarioPage extends JFrame{
     }
 
     private void uploadTable(){
-        List<Alimento> alimenti = readJsonToListAdvanced("alimenti.json", Alimento.class);
+        List<Alimento> alimenti = readJsonToListAdvanced("doNotDelete/alimenti.json", Alimento.class);
         TableAlimento tableAlimento = new TableAlimento(alimenti);
         table1.setModel(tableAlimento);
         Utils.setTableAlignment(table1);
@@ -73,5 +81,6 @@ public class InventarioPage extends JFrame{
         List<Alimento> list = Utils.removeFromTableIfPresent(table1);
         Utils.writeListToJson(list, "doNotDelete","alimenti.json");
         uploadTable();
+
     }
 }
