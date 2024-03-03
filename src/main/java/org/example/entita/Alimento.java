@@ -1,5 +1,8 @@
 package org.example.entita;
 
+import lombok.Data;
+
+@Data
 public class Alimento {
     private String id;
 

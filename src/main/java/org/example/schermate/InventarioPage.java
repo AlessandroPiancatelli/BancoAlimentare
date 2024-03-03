@@ -3,21 +3,26 @@ package org.example.schermate;
 import javax.swing.*;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import org.example.entita.Alimento;
 import org.example.tables.TableAlimento;
 import org.example.utils.Utils;
 
 import static org.example.utils.Utils.readJsonToListAdvanced;
 
+@Data
+@Getter(AccessLevel.PUBLIC)
 public class InventarioPage extends JFrame{
-    private JTable table1;
-    private JPanel inventario;
-    private JButton aggiungiButton;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JButton cancellaButton;
-    private JButton indietroButton;
-    private JTextField textField3;
+    protected JTable table1;
+    protected JPanel inventario;
+    protected JButton aggiungiButton;
+    protected JTextField textField1;
+    protected JTextField textField2;
+    protected JButton cancellaButton;
+    protected JButton indietroButton;
+    protected JTextField textField3;
 
     public InventarioPage(Integer xCord, Integer ycord) {
         Utils.setPositionAndDimensions(xCord,ycord, InventarioPage.this,inventario);
@@ -83,4 +88,6 @@ public class InventarioPage extends JFrame{
         uploadTable();
 
     }
+
+
 }
