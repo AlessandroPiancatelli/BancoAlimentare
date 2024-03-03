@@ -13,16 +13,15 @@ import org.example.utils.Utils;
 import static org.example.utils.Utils.readJsonToListAdvanced;
 
 @Data
-@Getter(AccessLevel.PUBLIC)
 public class InventarioPage extends JFrame{
-    protected JTable table1;
-    protected JPanel inventario;
-    protected JButton aggiungiButton;
-    protected JTextField textField1;
-    protected JTextField textField2;
-    protected JButton cancellaButton;
-    protected JButton indietroButton;
-    protected JTextField textField3;
+    private JTable table1;
+    private JPanel inventario;
+    private JButton aggiungiButton;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JButton cancellaButton;
+    private JButton indietroButton;
+    private JTextField textField3;
 
     public InventarioPage(Integer xCord, Integer ycord) {
         Utils.setPositionAndDimensions(xCord,ycord, InventarioPage.this,inventario);
@@ -70,12 +69,21 @@ public class InventarioPage extends JFrame{
         Utils.setTableAlignment(table1);
     }
 
-    private void delete(){
+    public void delete(Object... testParams){
+        if(testParams.length > 0) {try{Thread.sleep(1);} catch (Exception e){} }
         if(!Utils.checkIfSelectedIsPresent(table1)){
             return;
         }
-        Object[] options = {"Si","No"};
-        int response = JOptionPane.showOptionDialog(null,"Sei sicuro di vole cancellare l'alimento selezionato?","Conferma cancellazzione",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+
+        int response ;
+        if(testParams.length > 0 && testParams[0] instanceof Integer){
+            response = (Integer) testParams[0];
+        } else {
+            Object[] options = {"Si","No"};
+            response = JOptionPane.showOptionDialog(null,"Sei sicuro di vole cancellare l'alimento selezionato?","Conferma cancellazzione",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+        }
+
+
         switch (response){
             case 0:
                 break;
@@ -85,8 +93,8 @@ public class InventarioPage extends JFrame{
         }
         List<Alimento> list = Utils.removeFromTableIfPresent(table1);
         Utils.writeListToJson(list, "doNotDelete","alimenti.json");
-        uploadTable();
 
+        uploadTable();
     }
 
 
